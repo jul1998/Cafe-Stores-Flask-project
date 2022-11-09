@@ -20,7 +20,7 @@ def signup():
         if body['password'] is None or body['password']=="":
            return jsonify("password es inválido")      
       
-
+        #https://flask-bcrypt.readthedocs.io/en/1.0.1/
         password = bcrypt.generate_password_hash(body['password'], 10).decode("utf-8")
         new_user = User(email=body['email'], password=password, is_active=True)
 

@@ -7,7 +7,7 @@ from datetime import datetime
 import json
 
 jwt = JWTManager(app)
-
+#https://flask-jwt-extended.readthedocs.io/en/stable/basic_usage/
 @app.route("/login", methods=["POST"])
 def login():
     email = request.json.get("username", None)
