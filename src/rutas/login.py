@@ -10,7 +10,7 @@ jwt = JWTManager(app)
 #https://flask-jwt-extended.readthedocs.io/en/stable/basic_usage/
 @app.route("/login", methods=["POST"])
 def login():
-    email = request.json.get("username", None)
+    email = request.json.get("email", None)
     password = request.json.get("password", None)
  
     all_info = db.session.query(User).filter_by(email=email).first()
@@ -19,7 +19,7 @@ def login():
 
     try:
         if email != all_info.email:
-            return jsonify({"msg": "Bad username or password"}), 401
+            return jsonify({"msg": "Bad email or password"}), 401
         if email is None:
              return jsonify({"msg": "Email is none"}), 401
         if not bcrypt.check_password_hash(all_info.password, password):
@@ -27,6 +27,8 @@ def login():
         print(all_info.id)
         access_token = create_access_token(identity=all_info.email)#here we select what we want to return with token,
         #Then, generate new token
-        return jsonify(access_token=access_token)
+        return jsonify({"access_token":access_token,
+                        "user_id": all_info.id
+        })
     except:
         return jsonify("user does not exist"),401
