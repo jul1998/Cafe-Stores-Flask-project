@@ -31,10 +31,10 @@ CORS(app)
 setup_admin(app)
 
 #####  Importar Modelos  ####
-from src.modelos import User, BlockedList
+from src.modelos import User, BlockedList, Cafe
 
 ##### Importar las Rutas ####
-from src.rutas import signup, login, protected, logout, users
+from src.rutas import signup, login, protected, logout, users, get_cafes
 
 
 

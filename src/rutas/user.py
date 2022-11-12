@@ -14,11 +14,11 @@ def signup():
     #print(body['username'])     
     try:
         if body is None:
-           return jsonify("Body está vacío o email no viene en el body, es inválido")
+           return jsonify({"msg":"Body está vacío o email no viene en el body, es inválido"})
         if body['email'] is None or body['email']=="":
-           return jsonify("email es inválido")
+           return jsonify({"msg":"email es inválido"})
         if body['password'] is None or body['password']=="":
-           return jsonify("password es inválido")      
+           return jsonify({"msg":"password es inválido"})      
       
         #https://flask-bcrypt.readthedocs.io/en/1.0.1/
         password = bcrypt.generate_password_hash(body['password'], 10).decode("utf-8")
@@ -26,18 +26,18 @@ def signup():
 
         user = db.session.query(User).filter_by(email=body['email']).first()
         if user:
-            return jsonify("El usuario ya existe")
+            return jsonify({"msg":"El usuario ya existe"}),500
                 
         print(body['email'])
         #print(new_user.serialize())
         db.session.add(new_user) 
         db.session.commit()
-        return jsonify("Usuario creado exitosamente"), 201
+        return jsonify({"msg":"Usuario creado exitosamente"}), 200
 
     except Exception as err:
         db.session.rollback()
         print(err)
-        return jsonify({"mensaje": "error al registrar usuario"}), 500
+        return jsonify({"msg": "error al registrar usuario"}), 500
 
 
 
