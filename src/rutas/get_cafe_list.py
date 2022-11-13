@@ -38,7 +38,7 @@ def get_cafes():
     else: #Get request
 
         all_cafe_stores_query = Cafe.query.all()
-        cafe_list = [cafe.to_dict() for cafe in all_cafe_stores_query]
+        cafe_list = [cafe.serialize() for cafe in all_cafe_stores_query]
         print(cafe_list[0])
 
         return jsonify(cafe_list)
